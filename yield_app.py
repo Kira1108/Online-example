@@ -49,32 +49,29 @@ def ols_ui(t, y):
     
 def maual_ui(t, y):
     neilson_parameter_ui = {
-            "beta0": st.sidebar.slider("beta0", -1.0, 1000.0, 0.028),
-            # "beta1": st.sidebar.slider("beta1", 0.0,1.0, -0.03),
+            "beta0": st.sidebar.slider("beta0", -1.0, 1.0, 0.028),
+            "beta1": st.sidebar.slider("beta1", 0.0,1.0, -0.03),
             "beta2": st.sidebar.slider("beta2", -1.0,1.0, -0.04),
-            # "beta3": st.sidebar.slider("beta3", -1.0,1.0, 0.0),
+            "beta3": st.sidebar.slider("beta3", -1.0,1.0, 0.0),
             "tau1": st.sidebar.slider("tau1", 0.1, 10.0, 1.1),
-            # "tau2": st.sidebar.slider("tau2", 0.1, 10.0, 4.0)
+            "tau2": st.sidebar.slider("tau2", 0.1, 10.0, 4.0)
         }
-        
-    neilson_parameter_ui.update({"beta1":- neilson_parameter_ui['beta0']})
-    neilson_parameter_ui.update({"beta3":0.0})
-    neilson_parameter_ui.update({'tau2':1.0})
+
 
     model = NelsonSiegelSvenssonCurve(**neilson_parameter_ui)
     predt = np.linspace(t[-1] + 1,t[-1] + 21,200)
 
-    # fig = go.Figure(
-    #     [go.Scatter(name = "Nelsone", x = t, y = model(t)),
-    #         go.Scatter(name = "Observed Data", x = t, y = y),
-    #         go.Scatter(name = "Extroploate", x = predt, y = model(predt))
-    #         ]
-    # )
     fig = go.Figure(
-        [go.Scatter(name = "Observed Data", x = t, y = y),
-         go.Scatter(name = 'Nelson-Siegel-Svensson', x = predt, y = model(np.arange(1, len(predt) + 1)))
-         ]
+        [go.Scatter(name = "Nelsone", x = t, y = model(t)),
+            go.Scatter(name = "Observed Data", x = t, y = y),
+            go.Scatter(name = "Extroploate", x = predt, y = model(predt))
+            ]
     )
+    # fig = go.Figure(
+    #     [go.Scatter(name = "Observed Data", x = t, y = y),
+    #      go.Scatter(name = 'Nelson-Siegel-Svensson', x = predt, y = model(np.arange(1, len(predt) + 1)))
+    #      ]
+    # )
 
     fig.update_layout(
         title = "Nelson-Siegel-Svensson curve",
