@@ -59,6 +59,3 @@ def plugin_app():
 
 if __name__ == "__main__":
     plugin_app()
-# arima predict -  model predict
-# nelson predict - plugin
-# beta0 -> beta1
